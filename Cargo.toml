@@ -8,6 +8,8 @@ name = "fermats_utensil"
 
 [dependencies]
 argh = "0.1.12"
+fixedbitset = "0.5.6"
+rayon = "1.9.0"
 
 [dependencies.rug]
 version = "1.22"

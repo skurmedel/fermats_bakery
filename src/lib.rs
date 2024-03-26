@@ -1,6 +1,7 @@
 use rug::{Assign, Integer};
 
 pub mod primality;
+pub mod esieve;
 
 pub type BigInt = Integer;
 
