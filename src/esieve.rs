@@ -54,9 +54,15 @@ impl SieveState {
     }
 }
 
-pub struct SieveOptions {
-    // A limit on the number of division steps. If None, this is interpreted as limitless.
-    // rounds: Option<Integer>,
+pub enum EndCondition {
+    UpperBoundReached,
+}
+
+impl Default for EndCondition {
+    /// Runs the sieve until the upper bound has been reached.
+    fn default() -> Self {
+        Self::UpperBoundReached
+    }
 }
 
 fn find_next_divisor(
@@ -101,7 +107,7 @@ fn mark_multiples_as_composite(
     }
 }
 
-fn sieve_once(state: &mut SieveState, options: &SieveOptions) -> Result<bool> {
+fn sieve_once(state: &mut SieveState) -> Result<bool> {
     match find_next_divisor(
         state.last_divisor,
         state.upper_bound,
@@ -123,7 +129,10 @@ fn sieve_once(state: &mut SieveState, options: &SieveOptions) -> Result<bool> {
 ///
 /// Sieves until some condition is met. Usually this ends when all the primes have been found.
 ///
-fn run(state: &mut SieveState, options: SieveOptions) -> Result<()> {
-    while sieve_once(state, &options)? {}
+pub fn run(state: &mut SieveState, stop_when: EndCondition) -> Result<()> {
+    use EndCondition::*;
+    match stop_when {
+        UpperBoundReached => while sieve_once(state)? {},
+    }
     Ok(())
 }

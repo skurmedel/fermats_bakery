@@ -16,7 +16,7 @@ fn sieve_state_with_upper_bound_1() {
 #[test]
 fn sieve_upper_bound_inclusive() {
     let mut state = SieveState::with_upper_bound(5).unwrap();
-    run(&mut state, SieveOptions {}).expect("sieving 5 should be easy as pie");
+    run(&mut state, EndCondition::default()).expect("sieving 5 should be easy as pie");
 
     assert_eq!(&[2, 3, 5], state.primes_found());
 }
@@ -24,7 +24,7 @@ fn sieve_upper_bound_inclusive() {
 #[test]
 fn sieve_100_primes() {
     let mut state = SieveState::with_upper_bound(544).expect("this common scenario should be okay");
-    run(&mut state, SieveOptions {}).expect("should be child's play");
+    run(&mut state, EndCondition::default()).expect("should be child's play");
 
     let first_100_primes: Vec<usize> = FIRST_100_PRIMES.iter().map(|x| *x as usize).collect();
     assert_eq!(&first_100_primes, state.primes_found());
@@ -98,7 +98,7 @@ const FIRST_1000_PRIMES: &[usize] = &[
 fn sieve_1000_primes() {
     let mut state =
         SieveState::with_upper_bound(7925).expect("should be doable on any 2024 desktop or laptop");
-    run(&mut state, SieveOptions {}).expect("should be child's play");
+    run(&mut state, EndCondition::default()).expect("should be child's play");
 
     assert_eq!(FIRST_1000_PRIMES, state.primes_found());
 }
